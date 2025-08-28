@@ -1,0 +1,33 @@
+# Xcode / user junk
+xcuserdata/
+*.xcuserdatad
+*.xccheckout
+*.xcscmblueprint
+
+# Derived data & build outputs
+DerivedData/
+build/
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# SwiftPM
+.build/
+.swiftpm/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Misc
+.DS_Store
+
