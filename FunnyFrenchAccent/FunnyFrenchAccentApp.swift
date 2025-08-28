@@ -10,19 +10,23 @@ import SwiftUI
 @main
 struct FunnyFrenchAccentApp: App {
 	@State private var appModel = AppModel()
+	@Environment(\.openWindow) private var openWindow
 	
 	var body: some Scene {
 		WindowGroup(id: "main") {
 			ContentView()
 				.environment(appModel)
 		}
-		// Example of an optional second scene (reader-only window)
 		WindowGroup(id: "reader") {
-			ReaderView(app: appModel)
-				//.environment(appModel)
+			ReaderView()
+				.environment(appModel)
 		}
 		.commands {
-			AppCommands()
+			AppCommands(
+				transform: { appModel.transform() },
+				copy:      { appModel.copyOutput() },
+				newReader: { openWindow(id: "reader") }
+			)
 		}
 	}
 }

@@ -22,7 +22,7 @@ public final class AppModel {
 	}()
 	
 	func transform() {
-		var w = generator
+		let w = generator
 		w.text = input
 		let lang = w.determineLanguage()
 		w.processText(lang: lang)

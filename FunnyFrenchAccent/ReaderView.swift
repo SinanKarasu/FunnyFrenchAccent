@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReaderView: View {
-	@Bindable var app: AppModel   // instead of @EnvironmentObject
+	@Environment(AppModel.self) private var app      // ← your @Observable model
 	var body: some View {
 		ScrollView {
 			Text(app.output.isEmpty ? app.input : app.output)

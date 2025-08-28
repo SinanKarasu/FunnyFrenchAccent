@@ -12,22 +12,22 @@
 import SwiftUI
 
 struct AppCommands: Commands {
-	@Environment(AppModel.self) private var app      // ← your @Observable model
-	@Environment(\.openWindow) private var openWindow
+	let transform: () -> Void
+	let copy: () -> Void
+	let newReader: () -> Void
 	
 	var body: some Commands {
 		CommandGroup(after: .newItem) {
-			Button("Transform") { app.transform() }
+			Button("Transform", action: transform)
 				.keyboardShortcut("t", modifiers: [.command])
 			
 #if os(macOS) || os(iPadOS)
-			Button("New Reader Window") { openWindow(id: "reader") }
+			Button("New Reader Window", action: newReader)
 				.keyboardShortcut("n", modifiers: [.command, .shift])
 #endif
 		}
-		
 		CommandGroup(replacing: .pasteboard) {
-			Button("Copy Output") { app.copyOutput() }
+			Button("Copy Output", action: copy)
 				.keyboardShortcut("c", modifiers: [.command])
 		}
 	}
