@@ -8,7 +8,7 @@
 // =========================
 // File: Clipboard.swift (cross‑platform clipboard)
 // =========================
-import Foundation
+import SwiftUI
 #if os(iOS)
 import UIKit
 func crossPlatformCopy(_ s: String) { UIPasteboard.general.string = s }
@@ -20,4 +20,34 @@ func crossPlatformCopy(_ s: String) {
 }
 #endif
 
+
+
+#if os(iOS)
+import UIKit
+func copyToPasteboard(_ s: String) { UIPasteboard.general.string = s }
+struct ShareSheet: UIViewControllerRepresentable {
+	var activityItems: [Any]
+	func makeUIViewController(context: Context) -> UIActivityViewController {
+		UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+	}
+	func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
+}
+#elseif os(macOS)
+import AppKit
+struct ShareSheet: View {
+	var activityItems: [Any]
+	var body: some View {
+		VStack(spacing: 12) {
+			Text("Share (copy manually on macOS sandboxed apps)")
+			Button("Copy Text") { copyToPasteboard(String(describing: activityItems.first ?? "")) }
+			Button("Close") { NSApp.keyWindow?.close() }
+		}.padding()
+	}
+}
+func copyToPasteboard(_ s: String) {
+	let pb = NSPasteboard.general
+	pb.clearContents()
+	pb.setString(s, forType: .string)
+}
+#endif
 
