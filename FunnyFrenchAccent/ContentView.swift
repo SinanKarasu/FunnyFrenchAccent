@@ -20,6 +20,8 @@ struct ContentView: View {
 	
 	@State private var showShare = false
 	@State private var shareText = ""
+	@State private var showAbout = false
+
 
 	
 	var body: some View {
@@ -27,10 +29,16 @@ struct ContentView: View {
 		@Bindable var app = app
 
 		VStack(alignment: .leading, spacing: 14) {
-			HeaderBar(onOpen: { importing = true }, onSave: {
-				exportDoc.text = app.output.isEmpty ? app.input : app.output
-				exporting = true
-			}, onCopy: { app.copyOutput() }, onShare: { presentShare(app.output.isEmpty ? app.input : app.output) })
+			HeaderBar(
+				onOpen: { importing = true },
+				onSave: { exportDoc.text = app.output.isEmpty ? app.input : app.output; exporting = true },
+				onCopy: { app.copyOutput() },
+				onShare: { presentShare(app.output.isEmpty ? app.input : app.output) },
+				onAbout: { showAbout = true }                 // NEW
+			)
+			.sheet(isPresented: $showAbout) {
+				AboutView()
+			}
 			
 			Text("Input").font(.headline)
 			TextEditor(text: $app.input)
