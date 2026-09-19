@@ -19,13 +19,8 @@ protocol TextGenerator {
 
 extension TextGenerator {
 	func recognizeLanguage(text: String) -> NLLanguage? {
-		let lang = NLLanguageRecognizer.dominantLanguage(for: text)
-		if let lang { print("Language:", Locale.current.localizedString(forIdentifier: lang.rawValue) ?? lang.rawValue) }
-		return lang
+		NLLanguageRecognizer.dominantLanguage(for: text)
 	}
 	func processText(lang: NLLanguage?) {}
 }
-
-struct TaggedWord { var text: String; var nlTag: NLTag? }
-
 

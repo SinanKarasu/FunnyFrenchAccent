@@ -36,11 +36,14 @@ struct ShareSheet: UIViewControllerRepresentable {
 import AppKit
 struct ShareSheet: View {
 	var activityItems: [Any]
+	@Environment(\.dismiss) private var dismiss
+
 	var body: some View {
 		VStack(spacing: 12) {
-			Text("Share (copy manually on macOS sandboxed apps)")
+			Text("Share Output")
+				.font(.headline)
 			Button("Copy Text") { copyToPasteboard(String(describing: activityItems.first ?? "")) }
-			Button("Close") { NSApp.keyWindow?.close() }
+			Button("Close") { dismiss() }
 		}.padding()
 	}
 }
@@ -50,4 +53,3 @@ func copyToPasteboard(_ s: String) {
 	pb.setString(s, forType: .string)
 }
 #endif
-

@@ -21,6 +21,7 @@ struct ContentView: View {
 	@State private var showShare = false
 	@State private var shareText = ""
 	@State private var showAbout = false
+	@State private var didCopyOutput = false
 
 
 	
@@ -50,13 +51,31 @@ struct ContentView: View {
 			TransformButton { app.transform() }
 			
 			if !app.output.isEmpty {
-				Text("Output").font(.headline)
+				HStack {
+					Text("Output").font(.headline)
+					Spacer()
+					Button {
+						copyOutput()
+					} label: {
+						Label(
+							didCopyOutput ? "Copied" : "Copy Output",
+							systemImage: didCopyOutput ? "checkmark" : "doc.on.doc"
+						)
+					}
+					.buttonStyle(.borderless)
+				}
 				ScrollView {
 					Text(app.output)
+						.textSelection(.enabled)
 						.frame(maxWidth: .infinity, alignment: .leading)
 						.padding(8)
 						.background(.ultraThinMaterial)
 						.clipShape(RoundedRectangle(cornerRadius: 10))
+						.contextMenu {
+							Button("Copy All", systemImage: "doc.on.doc") {
+								copyOutput()
+							}
+						}
 				}
 				.frame(minHeight: 120)
 			}
@@ -80,6 +99,15 @@ struct ContentView: View {
 	func presentShare(_ text: String) {
 		shareText = text
 		showShare = true
+	}
+
+	func copyOutput() {
+		app.copyOutput()
+		didCopyOutput = true
+		Task {
+			try? await Task.sleep(for: .seconds(1.5))
+			didCopyOutput = false
+		}
 	}
 	
 }

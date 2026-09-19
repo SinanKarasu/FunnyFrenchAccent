@@ -21,14 +21,15 @@ struct AppCommands: Commands {
 			Button("Transform", action: transform)
 				.keyboardShortcut("t", modifiers: [.command])
 			
-#if os(macOS) || os(iPadOS)
+#if os(macOS) || os(iOS)
 			Button("New Reader Window", action: newReader)
 				.keyboardShortcut("n", modifiers: [.command, .shift])
 #endif
 		}
-		CommandGroup(replacing: .pasteboard) {
-			Button("Copy Output", action: copy)
-				.keyboardShortcut("c", modifiers: [.command])
+		CommandGroup(after: .pasteboard) {
+			Divider()
+			Button("Copy Full Output", action: copy)
+				.keyboardShortcut("c", modifiers: [.command, .shift])
 		}
 	}
 }

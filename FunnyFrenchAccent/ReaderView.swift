@@ -12,10 +12,15 @@ struct ReaderView: View {
 	var body: some View {
 		ScrollView {
 			Text(app.output.isEmpty ? app.input : app.output)
+				.textSelection(.enabled)
 				.frame(maxWidth: .infinity, alignment: .leading)
 				.padding()
+				.contextMenu {
+					Button("Copy All", systemImage: "doc.on.doc") {
+						app.copyOutput()
+					}
+				}
 		}
 		.navigationTitle("Reader")
 	}
 }
-

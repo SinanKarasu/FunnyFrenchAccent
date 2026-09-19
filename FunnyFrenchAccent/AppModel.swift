@@ -12,14 +12,7 @@ public final class AppModel {
 	var input: String = "Hello my dear friend, this is a funny test."
 	var output: String = ""
 	
-	private let generator = DefaultTextgenerator(text: "")
-	
-	@ObservationIgnored
-	private static let url: URL = {
-		let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-		try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-		return dir.appendingPathComponent("SwiftGraphMesh-prefs.json")
-	}()
+	private let generator = DefaultTextGenerator(text: "")
 	
 	func transform() {
 		let w = generator
@@ -38,5 +31,4 @@ public final class AppModel {
 		return AppModel()
 	}
 }
-
 

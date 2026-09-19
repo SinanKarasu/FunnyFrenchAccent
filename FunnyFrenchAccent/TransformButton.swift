@@ -17,7 +17,9 @@ struct TransformButton: View {
 			.onHover { hovering = $0 }
 			.scaleEffect(hovering ? 1.03 : 1.0)
 			.animation(.easeInOut(duration: 0.12), value: hovering)
+#if !os(macOS)
 			.hoverEffect(.highlight)
+#endif
 			.keyboardShortcut("t", modifiers: [.command])
 			.focusable(true)
 	}
